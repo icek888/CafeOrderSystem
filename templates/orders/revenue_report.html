@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Отчет о выручке{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mb-4 text-success">Отчет о выручке</h1>
+    <form method="get" class="mb-4">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label for="start_date" class="form-label">Начало (дата):</label>
+                <input type="date" name="start_date" id="start_date" class="form-control" value="{{ start_date }}">
+            </div>
+            <div class="col-md-2">
+                <label for="start_time" class="form-label">Начало (время):</label>
+                <input type="time" name="start_time" id="start_time" class="form-control" value="{{ start_time }}" step="60">
+            </div>
+            <div class="col-md-3">
+                <label for="end_date" class="form-label">Окончание (дата):</label>
+                <input type="date" name="end_date" id="end_date" class="form-control" value="{{ end_date }}">
+            </div>
+            <div class="col-md-2">
+                <label for="end_time" class="form-label">Окончание (время):</label>
+                <input type="time" name="end_time" id="end_time" class="form-control" value="{{ end_time }}" step="60">
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">Показать отчет</button>
+            </div>
+        </div>
+    </form>
+    <div class="card p-4 shadow-sm">
+        <h3>Общая выручка:</h3>
+        <p class="fs-4">{{ total_revenue }} руб.</p>
+        <h3>Оплаченные заказы ({{ paid_orders_with_dishes|length }}):</h3>
+        <ul class="list-group">
+            {% for item in paid_orders_with_dishes %}
+            <li class="list-group-item">
+                Заказ #{{ item.order.id }} (Стол {{ item.order.table_number }}): {{ item.order.total_price }} руб.
+                {% if item.dish_names %}
+                    - {{ item.dish_names }}
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'orders:order_list' %}" class="btn btn-primary mt-3">Вернуться к списку заказов</a>
+    </div>
+{% endblock %}

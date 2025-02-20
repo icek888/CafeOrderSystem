@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Редактировать заказ #{{ order.id }}{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mb-4 text-primary">Редактировать заказ #{{ order.id }}</h1>
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <h3>Информация о заказе</h3>
+        <!-- Выбор стола -->
+        <div class="mb-3">
+            <label for="{{ form.table_number.id_for_label }}" class="form-label">{{ form.table_number.label }}</label>
+            {{ form.table_number }}
+            {% if form.table_number.help_text %}
+                <small class="form-text text-muted">{{ form.table_number.help_text }}</small>
+            {% endif %}
+            {% for error in form.table_number.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <!-- Статус заказа -->
+        <div class="mb-3">
+            <label for="{{ form.status.id_for_label }}" class="form-label">{{ form.status.label }}</label>
+            {{ form.status }}
+            {% if form.status.help_text %}
+                <small class="form-text text-muted">{{ form.status.help_text }}</small>
+            {% endif %}
+            {% for error in form.status.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <!-- Существующие блюда (из JSON) -->
+        <h3>Существующие блюда</h3>
+        <div class="mb-3">
+            <label for="{{ form.dishes.id_for_label }}" class="form-label">{{ form.dishes.label }}</label>
+            {{ form.dishes }}
+            <small class="form-text text-muted">{{ form.dishes.help_text }}</small>
+        </div>
+        <!-- Кнопки "Сохранить" и "Отменить" внизу -->
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary me-2">Сохранить заказ</button>
+            <a href="{% url 'orders:order_list' %}" class="btn btn-secondary">Отменить заказ</a>
+        </div>
+    </form>
+{% endblock %}

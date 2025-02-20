@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Удаление заказа #{{ order.id }}{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mb-4 text-danger">Удаление заказа</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="card p-4 shadow-sm">
+        <p>Вы уверены, что хотите удалить заказ #{{ order.id }} для стола {{ order.table_number }}?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger me-2">Удалить</button>
+            <a href="{% url 'orders:order_list' %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+{% endblock %}
