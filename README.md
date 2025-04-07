@@ -150,3 +150,6 @@ cafe_management/
 
 Проект распространяется под лицензией MIT.
 ```
+
+Проект от **Карлена**   **https://github.com/icek888/**
+Компания: **Hotloads LLC**  
